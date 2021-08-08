@@ -1,27 +1,59 @@
 
-
-  
- 
   header {
     display: flex;
       align-items: center;
       justify-content: space-around;
       position: fixed;
-      height: 80px;
+      height: 60px;
       transition: all 0.5s;
       padding: 0 15px;
       background: #2e2f30;
       overflow-y: auto;
       width: 100%;
   }
+
+  header nav {
+      margin-right: 350px;
+      margin-left: 100px;
+  }
+
+
+  header nav a {
+    text-decoration: none;
+    color: rgb(223, 167, 12);
+    padding: 10px 20px;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 350ms;
+  }
+  
+  header nav a:hover {
+    background-color: #ffd369;
+    color: #222
+  }
+  
+  header nav a:hover::after {
+    background: #fff;
+    height: 3px;
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
    
-  header img {
-    width: 250px ;
-    height: 80px;
+  .headerImg{
+    width: 30px ;
+    height:35px;
     float: left;
   }
+
+  #logoImg {
+      width: 80px;
+      height: 100%;
+  }
      
-  #navSec {
+  .navSec li {
     padding: 5px 10px;
     display: inline-block;
     transition: all 500ms;
@@ -29,18 +61,15 @@
     font-size: 24px;
     font-style: oblique;
      font-weight: bold;
+     align-items: center;
+     justify-content: center;
    
   }
 
-  header nav a:hover {
-    color: #c9582c ;
-  
-    background-color: #76b5c5;
-  }
-  
+ 
 
   body{
-            width: 960px;
+            width: 100%;
         margin: auto;
         font-family: 'Roboto', sans-serif;
       
@@ -69,28 +98,61 @@
         padding: 30px;
         box-sizing: border-box;
       }
+
+    .bussMall-Container{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+            margin-left: 80px;
+            }
+
+    .resultSection{
+        margin-top: 20px;
+        margin-left: 80px;
+        border: 3px double rgb(78, 78, 76);
+        width: 100%;
+        height: 80px;
+
+    }
     
+    .btn{
+
+        margin-top: 20px;
+        margin-left: 100px;
+    }
+    .btn input{
+ 
+        width: 100px;
+        height: 25px;
+        background-color:  rgb(223, 167, 12) ;
+        border-radius: 7%;
+
+    }
      
     .divContainer img {
-        max-width: 100%;
-        height: 200px;
-        border: 10px solid rgb(61, 11, 40);
-        border-radius: 5%;
+        border: 3px double rgb(223, 167, 12);
+        border-radius: 15%;
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
         }  
-  
+
+ 
     footer {
+        position: fixed;
+        bottom: 0px;
       margin-top: 15px;
       padding: 2px;
-      color: #3d3e41;
+      color: rgb(223, 167, 12);
         font-size: 14px;
         font-style: italic;
         font-weight: 2px;
-        position: fixed;
         background: #040b14;
       text-align: center;
       justify-content: center;
       width: 100%;
-      height: 40px;
+      height: 30px;
   
     }
 
