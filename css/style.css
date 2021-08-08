@@ -1,58 +1,27 @@
-h1 {
-    font-family: "Raleway", sans-serif; }
+
+
   
-  
-  body{
-      margin: auto;
-      background-color:  #fafbfc; ;
-      font-weight: 10px;
-      font-size: 25px;
-      font-style:italic;
-        font-family: 'Bradley Hand, cursive';
-     color: #272829;
-  }
-  
-  a {
-    text-decoration: none;
-    text-align: center;
-    color: #149ddd;
-  }
-  
-  a:hover {
-    color: #37b3ed;
-    text-decoration: none;
-  }
-  
+ 
   header {
-    
-    align-items: center;
-    justify-content: space-around;
+    display: flex;
+      align-items: center;
+      justify-content: space-around;
       position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 300px;
-      transition: all ease-in-out 0.5s;
-      z-index: 9997;
+      height: 80px;
       transition: all 0.5s;
       padding: 0 15px;
-      background: #060c14;
+      background: #2e2f30;
       overflow-y: auto;
-      height: auto;
+      width: 100%;
+  }
    
-   }
-  
-  header  a:hover {
-    background: #149ddd;
-    color: #fff;
-    text-decoration: none;
+  header img {
+    width: 250px ;
+    height: 80px;
+    float: left;
   }
-  
-  header nav {
-    text-align: right;
-  }
-  
-  header nav a {
+     
+  #navSec {
     padding: 5px 10px;
     display: inline-block;
     transition: all 500ms;
@@ -62,25 +31,28 @@ h1 {
      font-weight: bold;
    
   }
+
   header nav a:hover {
     color: #c9582c ;
   
     background-color: #76b5c5;
   }
   
-    main {
-  
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  margin-top: 0px; 
-  margin-bottom: 0px;
-  height: 100%;
-  width: 100%;
- 
-  
-  }
-  
+
+  body{
+            width: 960px;
+        margin: auto;
+        font-family: 'Roboto', sans-serif;
+      
+}
+.homeMain {
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    height: 100%;
+}
   
   form label {
     font-weight: small;
@@ -90,22 +62,16 @@ h1 {
 
     
   
-  
-  .locList {
-    list-style-type:circle;
-    word-spacing: 2%;
-  }
-  
- 
-  
-    section div {
-        width: 33.33%;
+    
+  .containerSection {
+        width: 40%;
         float: left;
         padding: 30px;
+        box-sizing: border-box;
       }
     
      
-      section div img {
+    .divContainer img {
         max-width: 100%;
         height: 200px;
         border: 10px solid rgb(61, 11, 40);
@@ -113,19 +79,22 @@ h1 {
         }  
   
     footer {
-      margin-top: 150px;
+      margin-top: 15px;
       padding: 2px;
-      color: #f4f6fd;
+      color: #3d3e41;
         font-size: 14px;
+        font-style: italic;
+        font-weight: 2px;
         position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 300px;
-        z-index: 9999;
         background: #040b14;
       text-align: center;
+      justify-content: center;
+      width: 100%;
+      height: 40px;
   
     }
+
+   
   
  
   
