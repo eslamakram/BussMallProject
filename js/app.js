@@ -12,7 +12,7 @@ let imgArray = [
 
 //let all = [];
 let countRound = 0;
-let numberOfRound = 25;
+let numberOfRound = 5;
 
 let leftIndex = 0;
 let middleIndex = 0;
@@ -22,7 +22,7 @@ let imgNameArr = [];
 let shownArr = [];
 let clickedArr = [];
 
-let preventArr = [];
+let preventIndArr = [];
 
 
 const bussMallContainer = document.getElementById('bussMallContainer');
@@ -55,6 +55,23 @@ function render() {
     leftIndex = getRandomNum(0, imgArray.length - 1);
     middleIndex = getRandomNum(0, imgArray.length - 1);
     rightIndex = getRandomNum(0, imgArray.length - 1);
+
+
+
+    do {
+
+        if((leftIndex === middleIndex) || (preventIndArr.includes(leftIndex)) || (preventIndArr.includes(middleIndex))){
+          
+            middleIndex = getRandomNum(0, imgNameArr.length-1);
+            preventIndArr.push(leftIndex, middleIndex);
+
+        }else if((leftIndex === rightIndex) || (preventIndArr.includes(leftIndex)) || (preventIndArr.includes(middleIndex))){
+
+            rightIndex = getRandomNum(0, imgArray.length-1);
+            preventIndArr.push(rightIndex);
+        }
+
+    } while( leftIndex === middleIndex || middleIndex === rightIndex || leftIndex === rightIndex);
 
     leftImage.src = './assets/' + BussMall.all[leftIndex].image;
     middleImage.src = `./assets/${BussMall.all[middleIndex].image}`;
@@ -96,7 +113,66 @@ function clickHandler(click) {
     render();
         countRound++;
 
-}}
+} else {
+    createChart();
+  }
+}
+
+
+function createChart(){
+    let ctx = document.getElementById( 'myChart' ).getContext( '2d' );
+
+  let myChart = new Chart( ctx, {
+    type: 'bar',
+    data: {
+
+       labels: imgNameArr,
+      datasets: [{
+        label: '# shown',
+        data: shownArr,
+        backgroundColor:
+                'rgba(255, 99, 132, 0.2)',
+
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 2,
+        order : 2
+    } ,
+        {
+            label: '# clicked',
+            data: clickedArr,
+            backgroundColor:
+                    'rgba(255, 99, 132, 0.2)',
+    
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 2,
+            order : 1
+
+      }
+    ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  } );
+}
 
 
 
