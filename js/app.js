@@ -1,20 +1,28 @@
- 'use strict';
+'use strict';
 
 
 let imgArray = [
-     'wine-glass.jpg', 'water-can.jpg', 'unicorn.jpg',
-     'tauntaun.jpg', 'sweep.png', 'shark.jpg', 'scissors.jpg',
-     'pet-sweep.jpg', 'pen.jpg', 'dragon.jpg', 'dog-duck.jpg', 
-     'cthulhu.jpg', 'chair.jpg', 'bubblegum.jpg', 'breakfast.jpg',
-     'boots.jpg', 'bathroom.jpg', 'banana.jpg', 'bag.jpg' 
+    'wine-glass.jpg', 'water-can.jpg', 'unicorn.jpg',
+    'tauntaun.jpg', 'sweep.png', 'shark.jpg', 'scissors.jpg',
+    'pet-sweep.jpg', 'pen.jpg', 'dragon.jpg', 'dog-duck.jpg',
+    'cthulhu.jpg', 'chair.jpg', 'bubblegum.jpg', 'breakfast.jpg',
+    'boots.jpg', 'bathroom.jpg', 'banana.jpg', 'bag.jpg'
 ];
 
 
-let all = [];
+//let all = [];
 let countRound = 0;
 let numberOfRound = 25;
-let shownArray = [0,0,0];
 
+let leftIndex = 0;
+let middleIndex = 0;
+let rightIndex = 0;
+
+let imgNameArr = [];
+let shownArr = [];
+let clickedArr = [];
+
+let preventArr = [];
 
 
 const bussMallContainer = document.getElementById('bussMallContainer');
@@ -22,103 +30,125 @@ let leftImage = document.getElementById('leftBusMallImage');
 let middleImage = document.getElementById('middleBusMallImage');
 let rightImage = document.getElementById('rightBusMallImage');
 let resultBtn = document.getElementById('resultBtn');
-let resultTable = document.getElementById('resultsTable');
+let resultTable = document.getElementById('resultsTable'); 
 
 
-function BussMall( imgName , imageSrc ) {
+function BussMall(imgName, imageSrc) {
+    this.imgName = imgName;
+    this.image = imageSrc;
+    this.shown = 0;
+    this.clicked = 0;
+    BussMall.all.push(this);
 
-        this.imgName = imgName;
-        this.image = imageSrc;
-        this.shown = 0;
-        this.clicked = 0;
-        BussMall.all.push(this);
+}
 
-    }
+BussMall.all = [];
+console.log(BussMall.all);
 
-    console.log(all);
-
-
-for(let i = 0; i < imgArray.length; i++ ){
-    new BussMall( imgArray[i].split('.')[0], imgArray[i] );
-           }
-
-
-BussMall.prototype.render = function() {
-
-    var leftImageRandom = getRandomNum(0, imgArray - 1);
-    var middleImageRandom = getRandomNum(0, imgArray -1);
-    var rightImageRandom = getRandomNum(0, imgArray - 1);
-
-    leftImage.src = './assets/' + BussMall.all[leftImageRandom].image;
-    middleImage.src = './assets/' + BussMall.all[middleImageRandom].image;
-    rightImage.src = './assets/' + BussMall.all[rightImageRandom].image;
+for (let i = 0; i < imgArray.length; i++) {
+    new BussMall(imgArray[i].split('.')[0], imgArray[i]);
+}
 
 
-    BussMall.all[leftImageRandom].shown++;
-    BussMall.all[leftImageRandom].clicked++;
+function render() {
 
-    BussMall.all[middleImageRandom].shown++;
-    BussMall.all[middleImageRandom].clicked++;
+    leftIndex = getRandomNum(0, imgArray.length - 1);
+    middleIndex = getRandomNum(0, imgArray.length - 1);
+    rightIndex = getRandomNum(0, imgArray.length - 1);
 
-    BussMall.all[rightImageRandom].shown++;
-    BussMall.all[rightImageRandom].clicked++;
+    leftImage.src = './assets/' + BussMall.all[leftIndex].image;
+    middleImage.src = `./assets/${BussMall.all[middleIndex].image}`;
+    rightImage.src = './assets/' + BussMall.all[rightIndex].image;
 
-    BussMall.all = [];
+
+    BussMall.all[leftIndex].shown++;
+   
+    BussMall.all[middleIndex].shown++;
     
-
+    BussMall.all[rightIndex].shown++;
+   
 }
 render();
 
 
 bussMallContainer.addEventListener('click', clickHandler);
-function clickHandler(click){
+function clickHandler(click) {
 
     if ((click.target.id === 'leftBusMallImage' || click.target.id === 'middleBusMallImage'
-     || click.target.id === 'rightBusMallImage') && countRound < numberOfRound ){
-        render();
-         countRound++;
-                  
-     }
+        || click.target.id === 'rightBusMallImage') && countRound < numberOfRound) {
+        
 
-}
+    if(click.target.id === 'leftBusMallImage'){
 
-resultBtn.addEventListener('submit', resultHandler);
-function resultHandler(event){
- 
-let headerTable = document.createElement('tr');
-resultTable.appendChild(headerTable);
+        BussMall.all[leftIndex].clicked++;
 
-let h1 = document.createElement('th');
-h1.textContent = 'Image Name';
-headerTable.appendChild(h1);
+    }
+    else if(click.target.id === 'middleBusMallImage'){
 
-let h2 = document.createElement('th');
-h1.textContent = 'No of Clicked';
-headerTable.appendChild(h2);
+        BussMall.all[middleIndex].clicked++;
 
-let h3 = document.createElement('th');
-h3.textContent = "No of viewed";
-headerTable.appendChild(h3);
+    }
+    else if(click.target.id === 'rightBusMallImage'){
+
+        BussMall.all[rightIndex].clicked++;
+
+    }
+    render();
+        countRound++;
+
+}}
 
 
- let dr = document.createElement('tr');
- resultTable.appendChild(dr);
 
-let dcell = document.createElement('td');
-    dcell.textContent = imgArray[i].split('.')[0];
+resultBtn.addEventListener('click', resultHandler);
+function resultHandler(event) {
+
+    for(let i = 0; i < BussMall.all.length; i++){
+
+        imgNameArr.push(BussMall.all[i].imgName);
+        shownArr.push(BussMall.all[i].shown);
+        clickedArr.push(BussMall.all[i].clicked);
+    }
+
+  if ( event.target.id === 'resultBtn'){
+
+    let headerTable = document.createElement('tr');
+    resultTable.appendChild(headerTable);
+
+    let hRow1 = document.createElement('th');
+    hRow1.textContent = 'Image Name';
+    headerTable.appendChild(hRow1);
+
+    let hRow2 = document.createElement('th');
+    hRow2.textContent = 'No of Clicked';
+    headerTable.appendChild(hRow2);
+
+    let hRow3 = document.createElement('th');
+    hRow3.textContent = "No of viewed";
+    headerTable.appendChild(hRow3);
+
+for(let i = 0; i < BussMall.all.length; i++){
+
+    let dr = document.createElement('tr');
+    resultTable.appendChild(dr);
+
+    let dcell = document.createElement('td');
+    dcell.textContent = imgNameArr[i];
     dr.appendChild(dcell);
 
     let dcell2 = document.createElement('td');
-    dcell2.textContent = this.clicked;
+    dcell2.textContent = clickedArr[i];
     dr.appendChild(dcell2);
 
     let dcell3 = document.createElement('td');
-    dcell3.textContent = this.shown;
+    dcell3.textContent = shownArr[i];
     dr.appendChild(dcell3);
+}
+}
 
 }
 
-function getRandomNum ( min , max ){
+function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 
 }
