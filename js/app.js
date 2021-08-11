@@ -33,21 +33,20 @@ let resultBtn = document.getElementById('resultBtn');
 let resultTable = document.getElementById('resultsTable'); 
 
 
-function BussMall(imgName, imageSrc) {
+function BussMall(imgName, imageSrc, shown = 0, clicked = 0) {
     this.imgName = imgName;
     this.image = imageSrc;
-    this.shown = 0;
-    this.clicked = 0;
+    this.shown = shown;
+    this.clicked = clicked;
     BussMall.all.push(this);
 
 }
 
 BussMall.all = [];
+getData();
 console.log(BussMall.all);
 
-for (let i = 0; i < imgArray.length; i++) {
-    new BussMall(imgArray[i].split('.')[0], imgArray[i]);
-}
+
 
 
 function render() {
@@ -56,16 +55,18 @@ function render() {
     middleIndex = getRandomNum(0, imgArray.length - 1);
     rightIndex = getRandomNum(0, imgArray.length - 1);
 
-
-
     do {
 
-        if((leftIndex === middleIndex) || (preventIndArr.includes(leftIndex)) || (preventIndArr.includes(middleIndex))){
+        if((leftIndex === middleIndex) ||
+         (preventIndArr.includes(leftIndex)) ||
+          (preventIndArr.includes(middleIndex))){
           
             middleIndex = getRandomNum(0, imgNameArr.length-1);
             preventIndArr.push(leftIndex, middleIndex);
 
-        }else if((leftIndex === rightIndex) || (preventIndArr.includes(leftIndex)) || (preventIndArr.includes(middleIndex))){
+        }else if((leftIndex === rightIndex) || 
+        (preventIndArr.includes(leftIndex)) ||
+         (preventIndArr.includes(middleIndex))){
 
             rightIndex = getRandomNum(0, imgArray.length-1);
             preventIndArr.push(rightIndex);
@@ -83,7 +84,8 @@ function render() {
     BussMall.all[middleIndex].shown++;
     
     BussMall.all[rightIndex].shown++;
-   
+
+    localStorage.data = JSON.stringify(BussMall.all);   
 }
 render();
 
@@ -227,4 +229,19 @@ for(let i = 0; i < BussMall.all.length; i++){
 function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 
+}
+
+
+function getData(){
+if(localStorage.data)
+{
+  let data = JSON.parse( localStorage.data );
+    for( let i = 0; i < data.length; i++ ) {
+      new BussMall( data[i].imgName, data[i].image, data[i].shown , data[i].clicked);
+    }
+  } else {
+    for( let i = 0; i < imgArray.length; i++ ) {
+      new BussMall( imgArray[i].split( '.' )[0], imgArray[i] );
+    }
+  }
 }
